@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="row mt-5">
+  <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+  <div class="card" style="width: 20rem; height: 24rem; margin: 10px">
+   
+    <img src="{{ post.image }}"  class="card-img-top" >
+    <div class="card-body">
+      <div class="text-center" style="display: flex; flex-direction: row">
+        <h5 class="card-title text-center ">{{ post.title }}</h5>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class="card-text">{{ post.writer }}</span>
+        <span class="card-text float-right">{{ post.registered_dttm|date:'Y-m-d H:i'}}</span>
+      </div>
+      <div>
+      <span id="tags" class="card-text">
+        {{ post.tags.all|join:", " }}
+      </span>
+      </div>
+      {% comment %} <a href="/post/{{ post.id }}/color" class="btn btn-primary">Change Color</a>
+      <a href="/post/delete/{{ post.id }}" class="btn btn-primary">{{ post.id }} Delete</a> {% endcomment %}
+    
+    </div>
+  </div>
+ </div>
+</div>
+<div class="row  mt-5">
+  <div class="col-12">
+    <button class="btn btn-primary" onclick="location.href='/'">돌아가기</button>
+  </div>
+</div> 
+
+{% endblock %}

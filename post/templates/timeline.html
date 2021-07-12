@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+<div style="display: flex; flex-direction: row; flex-wrap: wrap">
+
+  {% for post in posts %}
+
+  <div class="card" style="width: 16rem; height: 20rem; margin: 8px;">  
+    <a href="{% url 'post' pk=post.pk %}" > 
+    <img src="{{ post.image }}"  class="card-img-top" >
+    </a>
+    <div class="card-body">
+      <div class="text-center" style="display: flex; flex-direction: row">
+        <h5 class="card-title text-center ">{{ post.title }}</h5>
+      </div>
+      <div class="d-flex justify-content-between">
+      
+        <span class="card-text">{{ post.writer }}</span>
+        <span class="card-text mr-auto">{{ post.registered_dttm|date:'Y-m-d H:i'}}</span>
+      </div>
+      {% comment %} <a href="{% url 'post_update' pk=post.pk %}" class="btn btn-primary">{{ post.id }} 수정</a>
+      <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-primary">{{ post.id }} 삭제</a> {% endcomment %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="row mt-5 justify-content-center">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&s={{request.GET.s}}">&laquo;</a></li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link disabled">&laquo;</span></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+      <li class="page-item active"><span class="page-link" >{{ i }}</span></li>
+      {% else %}
+      <li class="page-item"><a class="page-link"  href="?page={{ i }}&s={{request.GET.s}}">{{ i }}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&s={{request.GET.s}}">&raquo;</a></li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link disabled">&raquo;</span></li>
+      {% endif %}
+    </ul>
+</div>
+{% comment %} 
+<div class="row">
+  <div class="col-12">
+    <button class="btn btn-primary" onclick="location.href='/post/write/'">글쓰기</button>
+  </div>
+</div> {% endcomment %}
+
+  {% endblock %}
